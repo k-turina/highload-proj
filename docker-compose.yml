@@ -1,0 +1,35 @@
+version: '3.8'
+services:
+  redis:
+    image: redis:latest
+    container_name: "redis"
+    expose:
+      - "6379"
+
+  front:
+    image: highload-front
+    build:
+      dockerfile: highload-front/front.Dockerfile
+    container_name: "front"
+    restart: "on-failure"
+    env_file:
+      - highload-front/front.env
+    depends_on:
+      - redis
+    ports:
+      - "8000:8000"
+
+  worker:
+    image: highload-worker
+    build:
+      dockerfile: highload-worker/worker.Dockerfile
+    container_name: "worker"
+    restart: "on-failure"
+    env_file:
+      - highload-worker/worker.env
+    depends_on:
+      - redis
+    volumes:
+      - db_data:/db/
+volumes:
+    db_data:
