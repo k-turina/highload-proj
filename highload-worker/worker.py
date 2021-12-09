@@ -33,8 +33,9 @@ def get_book(uuid):
     rds.xadd(WRITE_ID, {"type": "get_book", "book": book})
 
 
-def create_sqlite_conn():
-    sqlite_conn = sqlite3.connect("/db/db.sqlite")
+def create_sqlite_conn(addr):
+    global sqlite_conn, cur
+    sqlite_conn = sqlite3.connect(addr)
     cur = sqlite_conn.cursor()
     cur.execute(
         '''
@@ -45,7 +46,6 @@ def create_sqlite_conn():
     );
     ''')
     sqlite_conn.commit()
-    return (cur, sqlite_conn)
 
 
 def read_event():
@@ -84,7 +84,7 @@ if __name__ == '__main__':
     )
     print("Connected to Redis")
 
-    (cur, sqlite_conn) = create_sqlite_conn()
+    create_sqlite_conn("/db/db.sqlite")
 
     print("Connected to Sqlite")
 
