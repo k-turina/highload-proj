@@ -37,7 +37,7 @@ class WorkerTests(unittest.TestCase):
         worker.save_book(book)
         worker.cur.execute("SELECT * FROM books")
         data = worker.cur.fetchall()
-        self.assertFalse(data, "There should be at least one book now")
+        self.assertTrue(data, "There should be at least one book now")
 
     def tearDown(self) -> None:
         worker.cur.execute("DELETE FROM books")
