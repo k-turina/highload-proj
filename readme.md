@@ -35,3 +35,7 @@ Request:
 Response:
 
 `{"uuid": "b40ed548-1c62-4e0f-8968-f1ef3f18a494", "name": "Illiad", "author": "Homer"}`
+
+# Lab-5
+
+There are two kinds of GH actions that are performed. First is building containers and composing them using Docker Compose. Second is running tests for worker written in python in its separate container. The same could be done for front, but I thought that it would be redundant since there's a very thin web layer and it would be basically the same there.
